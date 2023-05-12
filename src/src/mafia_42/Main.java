@@ -72,7 +72,10 @@ public class Main {
             // 마피아와 의사가 선택한 대상이 같은 경우
             if (mafiaTarget.equals(doctorTarget)) {
                 System.out.println("의사의 치료로 인해 " + mafiaTarget + "님이 살아났습니다.");
-            } else System.out.println(mafiaTarget + "님이 죽었습니다.");
+            } else {
+                System.out.println(mafiaTarget + "님이 죽었습니다.");
+                deadPlayers.add(mafiaTarget);
+            }
         }
     }
 }

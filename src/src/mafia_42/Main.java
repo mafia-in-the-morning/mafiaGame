@@ -3,7 +3,7 @@ package mafia_42;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
-
+import java.lang.*;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -57,6 +57,7 @@ public class Main {
             String mafiaTarget = "";
             while (true) {
                 System.out.print("마피아는 누구를 죽이겠습니까? ");
+                System.out.println("\n현재 살아있는 인원 : "+players);
                 mafiaTarget = scanner.nextLine();
                 if (players.contains(mafiaTarget) && !deadPlayers.contains(mafiaTarget)) {
                     break;
@@ -65,7 +66,9 @@ public class Main {
                 } else {
                     System.out.println("잘못된 입력입니다. 다시 입력해주세요.");
                 }
+
             }
+
             // 의사가 살릴 대상을 선택합니다.
             String doctorTarget = "";
             while (true) {
@@ -108,6 +111,7 @@ public class Main {
                 System.out.println("의사의 치료로 인해 " + mafiaTarget + "님이 살아났습니다.");
             } else {
                 System.out.println(mafiaTarget + "님이 죽었습니다.");
+                players.remove(mafiaTarget);
                 deadPlayers.add(mafiaTarget);
             }
             Round++;

@@ -10,13 +10,13 @@ public class Main {
         Random random = new Random();
 
         // 참가자 이름 입력 받기
-        System.out.println("게임에 참가하는 인원 수를 입력하세요(최소 5명, 최대 8명):");
+        System.out.println("게임에 참가하는 인원 수를 입력하세요(최소 4명, 최대 8명):");
         int numOfPlayers = scanner.nextInt();
         scanner.nextLine(); // 개행문자 제거
 
-        while (numOfPlayers < 5 || numOfPlayers > 8) {
+        while (numOfPlayers < 4 || numOfPlayers > 8) {
             System.out.println("잘못된 입력입니다. 최소 5명, 최대 8명까지 입력해주세요.");
-            System.out.println("게임에 참가하는 인원 수를 입력하세요(최소 5명, 최대 8명):");
+            System.out.println("게임에 참가하는 인원 수를 입력하세요(최소 4명, 최대 8명):");
             numOfPlayers = scanner.nextInt();
             scanner.nextLine(); // 개행문자 제거
         }
@@ -47,9 +47,11 @@ public class Main {
         System.out.println("의사: " + doctor);
         System.out.println("경찰: " + police);
 
+        int Round=1;
         while (true) {
+            System.out.println("\nRound "+Round);
             // 밤이 되었습니다.
-            System.out.println("\n밤이 되었습니다.");
+            System.out.println("밤이 되었습니다.");
 
             // 마피아가 죽일 대상을 선택합니다.
             String mafiaTarget = "";
@@ -77,6 +79,30 @@ public class Main {
                     System.out.println("잘못된 입력입니다. 다시 입력해주세요.");
                 }
             }
+            // 경찰이 조사할 대상을 선택합니다.
+            String policeTarget = "";
+            while (true) {
+                System.out.print("경찰은 누구를 조사하겠습니까? ");
+                policeTarget = scanner.nextLine();
+                if (players.contains(policeTarget) && !policeTarget.equals(police) && !deadPlayers.contains(policeTarget)) {
+                    break;
+                } else if (policeTarget.equals(police)) {
+                    System.out.println("경찰은 자신을 조사할 수 없습니다. 다시 선택해주세요.");
+                } else if (deadPlayers.contains(policeTarget)) {
+                    System.out.println(policeTarget + "님은 이미 죽은 상태입니다. 다시 선택해주세요.");
+                } else {
+                    System.out.println("잘못된 입력입니다. 다시 입력해주세요.");
+                }
+            }
+            // 경찰이 선택한 대상이 마피아인지 아닌지 확인합니다.
+            if (mafia.equals(policeTarget)) {
+                System.out.println(policeTarget + "님은 마피아입니다.");
+            } else {
+                System.out.println(policeTarget + "님은 마피아가 아닙니다.");
+            }
+
+
+
             // 마피아와 의사가 선택한 대상이 같은 경우
             if (mafiaTarget.equals(doctorTarget)) {
                 System.out.println("의사의 치료로 인해 " + mafiaTarget + "님이 살아났습니다.");
@@ -84,6 +110,7 @@ public class Main {
                 System.out.println(mafiaTarget + "님이 죽었습니다.");
                 deadPlayers.add(mafiaTarget);
             }
+            Round++;
         }
     }
 }

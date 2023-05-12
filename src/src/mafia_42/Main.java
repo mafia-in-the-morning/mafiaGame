@@ -10,9 +10,16 @@ public class Main {
         Random random = new Random();
 
         // 참가자 이름 입력 받기
-        System.out.println("게임에 참가하는 인원 수를 입력하세요.");
+        System.out.println("게임에 참가하는 인원 수를 입력하세요(최소 5명, 최대 8명):");
         int numOfPlayers = scanner.nextInt();
         scanner.nextLine(); // 개행문자 제거
+
+        while (numOfPlayers < 5 || numOfPlayers > 8) {
+            System.out.println("잘못된 입력입니다. 최소 5명, 최대 8명까지 입력해주세요.");
+            System.out.println("게임에 참가하는 인원 수를 입력하세요(최소 5명, 최대 8명):");
+            numOfPlayers = scanner.nextInt();
+            scanner.nextLine(); // 개행문자 제거
+        }
 
         ArrayList<String> players = new ArrayList<>();
         ArrayList<String> deadPlayers = new ArrayList<>();
@@ -22,6 +29,7 @@ public class Main {
             String name = scanner.nextLine();
             players.add(name);
         }
+
 
         // 마피아, 의사, 경찰 랜덤 선택
         String mafia = players.get(random.nextInt(numOfPlayers));

@@ -36,16 +36,26 @@ public class Main {
         String doctor = players.get(random.nextInt(numOfPlayers));
         String police = players.get(random.nextInt(numOfPlayers));
 
-        // 중복되는 역할이 없도록 while문 추가
+// 중복되는 역할이 없도록 while문 추가
         while (mafia.equals(doctor) || mafia.equals(police) || doctor.equals(police)) {
             doctor = players.get(random.nextInt(numOfPlayers));
             police = players.get(random.nextInt(numOfPlayers));
+        }
+
+// 6명 이상일 경우 추가 마피아 랜덤 선택
+        if (numOfPlayers >= 6) {
+            String mafia2 = players.get(random.nextInt(numOfPlayers));
+            while (mafia2.equals(mafia) || mafia2.equals(doctor) || mafia2.equals(police)) {
+                mafia2 = players.get(random.nextInt(numOfPlayers));
+            }
+            mafia += "와 " + mafia2;
         }
 
         System.out.println("게임 참가자: " + players);
         System.out.println("마피아: " + mafia);
         System.out.println("의사: " + doctor);
         System.out.println("경찰: " + police);
+
 
         int Round = 1;
         while (true) {
@@ -122,17 +132,17 @@ public class Main {
                 players.remove(mafiaTarget);
                 deadPlayers.add(mafiaTarget);
             }
-                // 낮이 되었을 때
-                System.out.println("\n낮이 되었습니다.");
-                System.out.println("3분간 회의를 진행합니다.");
-                Meeting meeting = new Meeting(players);
-                Thread meetingThread = new Thread(meeting.toString());
-                meetingThread.start();
-                try {
-                    Thread.sleep(3 * 1000); // 3분 대기
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+            // 낮이 되었을 때
+            System.out.println("\n낮이 되었습니다.");
+            System.out.println("3분간 회의를 진행합니다.");
+            Meeting meeting = new Meeting(players);
+            Thread meetingThread = new Thread(meeting.toString());
+            meetingThread.start();
+            try {
+                Thread.sleep(3 * 1000); // 3분 대기
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             // 투표시간
             System.out.println("\n=== 투표 시간 ===");
             HashMap<String, Integer> votes = new HashMap<>(); // 각 참가자별 득표수를 저장할 HashMap
@@ -175,7 +185,7 @@ public class Main {
             // 최다 득표수를 얻은 참가자가 있을 경우 해당 참가자 제거 후 결과 출력
             if (!maxVotePlayer.equals("무효")) {
                 System.out.println("\n" + maxVotePlayer + "님이 최다 득표수(" + maxVoteCount + "표)를 얻어 처형됩니다.");
-                players.remove(mafiaTarget);
+                players.remove(maxVotePlayer);
                 deadPlayers.add(maxVotePlayer);
 
             } else { // 무효 표시가 된 경우 결과 출력
@@ -183,7 +193,7 @@ public class Main {
             }
 
 
-                Round++;
+            Round++;
 
         }
     }

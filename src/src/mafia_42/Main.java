@@ -133,20 +133,30 @@ public class Main {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+            // 투표시간
             System.out.println("\n=== 투표 시간 ===");
             HashMap<String, Integer> votes = new HashMap<>(); // 각 참가자별 득표수를 저장할 HashMap
 
             for (String player : players) {
                 if (!deadPlayers.contains(player)) { // 이미 죽은 참가자는 제외
-                    System.out.print(player + "님, 투표하실 분을 입력하세요: ");
-                    String vote = scanner.nextLine();
-                    if (votes.containsKey(vote)) { // 이미 투표된 참가자의 득표수 증가
-                        votes.put(vote, votes.get(vote) + 1);
-                    } else { // 처음 투표된 참가자는 득표수 1로 초기화
-                        votes.put(vote, 1);
+                    boolean voted = false; // 투표 완료 여부를 나타내는 변수
+                    while (!voted) { // 투표가 완료될 때까지 반복
+                        System.out.print(player + "님, 투표하실 분을 입력하세요: ");
+                        String vote = scanner.nextLine();
+                        if (!deadPlayers.contains(vote)) { // 죽은 참가자에 대한 투표 불가
+                            if (votes.containsKey(vote)) { // 이미 투표된 참가자의 득표수 증가
+                                votes.put(vote, votes.get(vote) + 1);
+                            } else { // 처음 투표된 참가자는 득표수 1로 초기화
+                                votes.put(vote, 1);
+                            }
+                            voted = true; // 투표가 완료됨을 표시
+                        } else {
+                            System.out.println("죽은 참가자에게는 투표할 수 없습니다. 다시 입력해주세요.");
+                        }
                     }
                 }
             }
+
 
             // 최다 득표수를 얻은 참가자를 구함
             int maxVoteCount = 0;
@@ -165,7 +175,9 @@ public class Main {
             // 최다 득표수를 얻은 참가자가 있을 경우 해당 참가자 제거 후 결과 출력
             if (!maxVotePlayer.equals("무효")) {
                 System.out.println("\n" + maxVotePlayer + "님이 최다 득표수(" + maxVoteCount + "표)를 얻어 처형됩니다.");
+                players.remove(mafiaTarget);
                 deadPlayers.add(maxVotePlayer);
+
             } else { // 무효 표시가 된 경우 결과 출력
                 System.out.println("\n투표가 무효 처리되었습니다. 동점이거나 모든 참가자가 투표를 거부했습니다.");
             }

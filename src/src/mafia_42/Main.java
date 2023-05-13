@@ -1,9 +1,8 @@
 package mafia_42;
 
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 import java.lang.*;
+
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -13,8 +12,6 @@ public class Main {
         System.out.println("게임에 참가하는 인원 수를 입력하세요(최소 4명, 최대 8명):");
         int numOfPlayers = scanner.nextInt();
         scanner.nextLine(); // 개행문자 제거
-
-
 
 
         while (numOfPlayers < 4 || numOfPlayers > 8) {
@@ -50,7 +47,7 @@ public class Main {
         System.out.println("의사: " + doctor);
         System.out.println("경찰: " + police);
 
-        int Round=1;
+        int Round = 1;
         while (true) {
             System.out.println("\nRound " + Round);
             // 밤이 되었습니다.
@@ -73,7 +70,7 @@ public class Main {
             }
 
             // 의사가 살릴 대상을 선택합니다.
-            String doctorTarget = null;
+            String doctorTarget = "";
             if (!deadPlayers.contains(doctor)) {
                 doctorTarget = "";
                 while (true) {
@@ -125,7 +122,57 @@ public class Main {
                 players.remove(mafiaTarget);
                 deadPlayers.add(mafiaTarget);
             }
-            Round++;
+                // 낮이 되었을 때
+                System.out.println("\n낮이 되었습니다.");
+                System.out.println("3분간 회의를 진행합니다.");
+                Meeting meeting = new Meeting(players);
+                Thread meetingThread = new Thread(meeting.toString());
+                meetingThread.start();
+                try {
+                    Thread.sleep(3 * 1000); // 3분 대기
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            System.out.println("\n=== 투표 시간 ===");
+            HashMap<String, Integer> votes = new HashMap<>(); // 각 참가자별 득표수를 저장할 HashMap
+
+            for (String player : players) {
+                if (!deadPlayers.contains(player)) { // 이미 죽은 참가자는 제외
+                    System.out.print(player + "님, 투표하실 분을 입력하세요: ");
+                    String vote = scanner.nextLine();
+                    if (votes.containsKey(vote)) { // 이미 투표된 참가자의 득표수 증가
+                        votes.put(vote, votes.get(vote) + 1);
+                    } else { // 처음 투표된 참가자는 득표수 1로 초기화
+                        votes.put(vote, 1);
+                    }
+                }
+            }
+
+            // 최다 득표수를 얻은 참가자를 구함
+            int maxVoteCount = 0;
+            String maxVotePlayer = "";
+            for (Map.Entry<String, Integer> entry : votes.entrySet()) {
+                String player = entry.getKey();
+                int voteCount = entry.getValue();
+                if (voteCount > maxVoteCount) {
+                    maxVoteCount = voteCount;
+                    maxVotePlayer = player;
+                } else if (voteCount == maxVoteCount) { // 득표수가 같을 경우 무효 표시
+                    maxVotePlayer = "무효";
+                }
+            }
+
+            // 최다 득표수를 얻은 참가자가 있을 경우 해당 참가자 제거 후 결과 출력
+            if (!maxVotePlayer.equals("무효")) {
+                System.out.println("\n" + maxVotePlayer + "님이 최다 득표수(" + maxVoteCount + "표)를 얻어 처형됩니다.");
+                deadPlayers.add(maxVotePlayer);
+            } else { // 무효 표시가 된 경우 결과 출력
+                System.out.println("\n투표가 무효 처리되었습니다. 동점이거나 모든 참가자가 투표를 거부했습니다.");
+            }
+
+
+                Round++;
+
         }
     }
 }

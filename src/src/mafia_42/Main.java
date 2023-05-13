@@ -36,13 +36,13 @@ public class Main {
         String doctor = players.get(random.nextInt(numOfPlayers));
         String police = players.get(random.nextInt(numOfPlayers));
 
-// 중복되는 역할이 없도록 while문 추가
+        // 중복되는 역할이 없도록 while문 추가
         while (mafia.equals(doctor) || mafia.equals(police) || doctor.equals(police)) {
             doctor = players.get(random.nextInt(numOfPlayers));
             police = players.get(random.nextInt(numOfPlayers));
         }
 
-// 6명 이상일 경우 추가 마피아 랜덤 선택
+        // 6명 이상일 경우 추가 마피아 랜덤 선택
         if (numOfPlayers >= 6) {
             String mafia2 = players.get(random.nextInt(numOfPlayers));
             while (mafia2.equals(mafia) || mafia2.equals(doctor) || mafia2.equals(police)) {

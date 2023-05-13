@@ -132,6 +132,10 @@ public class Main {
                 players.remove(mafiaTarget);
                 deadPlayers.add(mafiaTarget);
             }
+            if(players.size()<=2&&players.contains(mafia)){
+                System.out.println("시민의 수보다 마피아의 수가 같거나 많습니다! 마피아의 승리입니다!");
+            }
+
             // 낮이 되었을 때
             System.out.println("\n낮이 되었습니다.");
             System.out.println("3분간 회의를 진행합니다.");
@@ -187,6 +191,15 @@ public class Main {
                 System.out.println("\n" + maxVotePlayer + "님이 최다 득표수(" + maxVoteCount + "표)를 얻어 처형됩니다.");
                 players.remove(maxVotePlayer);
                 deadPlayers.add(maxVotePlayer);
+                if(maxVotePlayer.equals(mafia)){
+                    System.out.println("마피아를 검거했습니다! 시민의 승리입니다!");
+                    break;
+                }
+                else if(players.size()<=2&&players.contains(mafia)){
+                    System.out.println("시민의 수보다 마피아의 수가 같거나 많습니다! 마피아의 승리입니다!");
+                    break;
+                }
+
 
             } else { // 무효 표시가 된 경우 결과 출력
                 System.out.println("\n투표가 무효 처리되었습니다. 동점이거나 모든 참가자가 투표를 거부했습니다.");

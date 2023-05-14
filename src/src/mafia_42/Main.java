@@ -8,6 +8,8 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         Random random = new Random();
 
+        AsciiArtPrinter.startLogo();
+
         // 참가자 이름 입력 받기
         System.out.println("게임에 참가하는 인원 수를 입력하세요(최소 4명, 최대 8명):");
         int numOfPlayers = scanner.nextInt();
@@ -73,6 +75,7 @@ if(numOfPlayers>=6){
             // 마피아가 죽일 대상을 선택합니다.
             String mafiaTarget = "";
             while (true) {
+                AsciiArtPrinter.mafiaLogo();
                 System.out.print("마피아는 누구를 죽이겠습니까? ");
                 System.out.println("\n현재 살아있는 인원 : " + players);
                 mafiaTarget = scanner.nextLine();

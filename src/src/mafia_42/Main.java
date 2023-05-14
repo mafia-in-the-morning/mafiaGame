@@ -165,6 +165,7 @@ if(numOfPlayers>=6){
             }
             // 투표시간
             System.out.println("\n=== 투표 시간 ===");
+            System.out.println(players);
             HashMap<String, Integer> votes = new HashMap<>(); // 각 참가자별 득표수를 저장할 HashMap
 
             for (String player : players) {

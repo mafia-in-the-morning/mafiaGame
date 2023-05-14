@@ -1,4 +1,4 @@
-package mafia_42;
+package mafia_42.player;
 
 public class Player {
     private String name;

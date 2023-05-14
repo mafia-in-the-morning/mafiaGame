@@ -35,7 +35,7 @@ public class Main {
         String mafia = players.get(random.nextInt(numOfPlayers));
         String doctor = players.get(random.nextInt(numOfPlayers));
         String police = players.get(random.nextInt(numOfPlayers));
-
+        String mafia2="";
         // 중복되는 역할이 없도록 while문 추가
         while (mafia.equals(doctor) || mafia.equals(police) || doctor.equals(police)) {
             doctor = players.get(random.nextInt(numOfPlayers));
@@ -44,18 +44,25 @@ public class Main {
 
         // 6명 이상일 경우 추가 마피아 랜덤 선택
         if (numOfPlayers >= 6) {
-            String mafia2 = players.get(random.nextInt(numOfPlayers));
+             mafia2= players.get(random.nextInt(numOfPlayers));
             while (mafia2.equals(mafia) || mafia2.equals(doctor) || mafia2.equals(police)) {
                 mafia2 = players.get(random.nextInt(numOfPlayers));
             }
-            mafia += "와 " + mafia2;
+
         }
-
-        System.out.println("게임 참가자: " + players);
-        System.out.println("마피아: " + mafia);
-        System.out.println("의사: " + doctor);
-        System.out.println("경찰: " + police);
-
+if(numOfPlayers<6) {
+    System.out.println("게임 참가자: " + players);
+    System.out.println("마피아: " + mafia);
+    System.out.println("의사: " + doctor);
+    System.out.println("경찰: " + police);
+}
+if(numOfPlayers>=6){
+    System.out.println("게임 참가자: " + players);
+    System.out.println("마피아: " + mafia);
+    System.out.println("마피아2: "+mafia2);
+    System.out.println("의사: " + doctor);
+    System.out.println("경찰: " + police);
+}
 
         int Round = 1;
         while (true) {
@@ -70,7 +77,11 @@ public class Main {
                 System.out.println("\n현재 살아있는 인원 : " + players);
                 mafiaTarget = scanner.nextLine();
                 if (players.contains(mafiaTarget) && !deadPlayers.contains(mafiaTarget)) {
-                    break;
+                    if(mafiaTarget.equals(mafia)||mafiaTarget.equals(mafia2)){
+                        System.out.println("마피아는 마피아를 죽일 수 없습니다. 다시 선택해주세요.");
+                    }else{
+                        break;}
+
                 } else if (deadPlayers.contains(mafiaTarget)) {
                     System.out.println("이미 죽은 플레이어입니다. 다시 선택해주세요.");
                 } else {
@@ -116,7 +127,10 @@ public class Main {
                 // 경찰이 선택한 대상이 마피아인지 아닌지 확인합니다.
                 if (mafia.equals(policeTarget)) {
                     System.out.println(policeTarget + "님은 마피아입니다.");
-                } else {
+                }else if(mafia2.equals(policeTarget)){
+                    System.out.println(policeTarget+"님은 마피아입니다.");
+                }
+                else {
                     System.out.println(policeTarget + "님은 마피아가 아닙니다.");
                 }
             } else {
@@ -132,7 +146,9 @@ public class Main {
                 players.remove(mafiaTarget);
                 deadPlayers.add(mafiaTarget);
             }
-            if(players.size()<=2&&players.contains(mafia)){
+            if((players.size()<=2&&(players.contains(mafia)||players.contains(mafia2)))||
+                    (players.size()<=4&&(players.contains(mafia)&&players.contains(mafia2)))
+            ){
                 System.out.println("시민의 수보다 마피아의 수가 같거나 많습니다! 마피아의 승리입니다!");
             }
 
@@ -149,6 +165,7 @@ public class Main {
             }
             // 투표시간
             System.out.println("\n=== 투표 시간 ===");
+            System.out.println(players);
             HashMap<String, Integer> votes = new HashMap<>(); // 각 참가자별 득표수를 저장할 HashMap
 
             for (String player : players) {
@@ -191,11 +208,12 @@ public class Main {
                 System.out.println("\n" + maxVotePlayer + "님이 최다 득표수(" + maxVoteCount + "표)를 얻어 처형됩니다.");
                 players.remove(maxVotePlayer);
                 deadPlayers.add(maxVotePlayer);
-                if(maxVotePlayer.equals(mafia)){
-                    System.out.println("마피아를 검거했습니다! 시민의 승리입니다!");
+                if(deadPlayers.contains(mafia)&&deadPlayers.contains(mafia2)){
+                    System.out.println("마피아를 모두 검거했습니다! 시민의 승리입니다!");
                     break;
                 }
-                else if(players.size()<=2&&players.contains(mafia)){
+                else if((players.size()<=2&&(players.contains(mafia)||players.contains(mafia2)))||
+                        (players.size()<=4&&(players.contains(mafia)&&players.contains(mafia2)))){
                     System.out.println("시민의 수보다 마피아의 수가 같거나 많습니다! 마피아의 승리입니다!");
                     break;
                 }

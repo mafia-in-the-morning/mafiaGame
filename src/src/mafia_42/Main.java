@@ -153,6 +153,7 @@ if(numOfPlayers>=6){
                     (players.size()<=4&&(players.contains(mafia)&&players.contains(mafia2)))
             ){
                 System.out.println("시민의 수보다 마피아의 수가 같거나 많습니다! 마피아의 승리입니다!");
+                break;
             }
 
             // 낮이 되었을 때

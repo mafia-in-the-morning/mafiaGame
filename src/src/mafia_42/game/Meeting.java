@@ -1,5 +1,7 @@
-package mafia_42;
+package mafia_42.game;
 
+
+import mafia_42.player.Player;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,12 +10,12 @@ import java.util.Scanner;
 public class Meeting {
     //회의
     Scanner scanner = new Scanner(System.in);
-    public Meeting(ArrayList<String> players) {
+    public Meeting(ArrayList<Player> players) {
     }
 
     //투표
-    void doVote(ArrayList<String> players, ArrayList<String> deadPlayers, HashMap<String, Integer> votes){
-        for (String player : players) {
+    void doVote(ArrayList<Player> players, ArrayList<Player> deadPlayers, HashMap<String, Integer> votes){
+        for (Player player : players) {
             if (!deadPlayers.contains(player)) { // 이미 죽은 참가자는 제외
                 boolean voted = false; // 투표 완료 여부를 나타내는 변수
                 while (!voted) { // 투표가 완료될 때까지 반복

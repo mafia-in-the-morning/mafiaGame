@@ -67,7 +67,13 @@ public class Game {
         return players;
     }
 
-    public static void assignRoles(List<String> players, List<String> mafiaTeam, int numOfPlayers, Mafia mafia, Mafia mafia2, Doctor doctor, Police police ) {
+
+    Mafia mafia;
+    Mafia mafia2;
+    Doctor doctor;
+    Police police;
+    public void assignRoles(ArrayList<String> players, ArrayList<String> mafiaTeam,
+                            ArrayList<String> citizenTeam) {
         Random random = new Random();
 
         List<Integer> availableNumbers = new ArrayList<>();
@@ -88,35 +94,77 @@ public class Game {
 
         // 마피아, 의사, 경찰 랜덤 선택
         mafia = new Mafia(players.get(mafiaNum));
+        System.out.println(">> 🔪마피아: " + mafia.getName() + "님");
+
+
         mafiaTeam.add(mafia.getName());
         doctor = new Doctor(players.get(doctorNum));
+        System.out.println(">> 🩺의사: " + doctor.getName() + "님");
+
+
         police = new Police(players.get(policeNum));
+        System.out.println(">> 👮🏻‍경찰: " + police.getName() + "님");
+
+
         mafia2 = null;
-        if (numOfPlayers >= 6) {
+        // 인원이 6인 이상인 경우 마피아 2 생성
+        if (players.size() >= 6) {
             mafia2 = new Mafia(players.get(mafiaNum2));
             mafiaTeam.add(mafia2.getName());
+            System.out.println("🔪마피아2: " + mafia2.getName() + "님");
         }
 
-        System.out.println("게임 참가자: " + players);
-
-        System.out.println("마피아: " + mafia.getName());
-        if(numOfPlayers>=6){
-            System.out.println("마피아2: "+mafia2.getName());
+        // mafiaTeam에 포함되지 않는 모든 player를 citizenTeam에 소속시킴
+        for (String player : players) {
+            if (!mafiaTeam.contains(player)) {
+                citizenTeam.add(player);
+            }
         }
-        System.out.println("의사: " + doctor.getName());
-        System.out.println("경찰: " + police.getName());
+    }
+
+    public Doctor getDoctor() {
+        return doctor;
+    }
+    public Police getPolice() {
+        return police;
+    }
+    public Mafia getMafia() {
+        return mafia;
+    }
+    public Mafia getMafia2() {
+        return mafia2;
+    }
+
+    public void showDetectResult(ArrayList<String> mafiaTeam, String policeTarget){
+        if (mafiaTeam.contains(policeTarget)) {
+            System.out.println(policeTarget + "님은 마피아입니다.");
+        }
+        else {
+            System.out.println(policeTarget + "님은 마피아가 아닙니다.");
+        }
+    }
+
+    public void showHealResult(String doctorTarget, String mafiaTarget, ArrayList<String> players, ArrayList<String> deadPlayers, ArrayList<String> citizenTeam){
+        if (mafiaTarget.equals(doctorTarget)) {
+            System.out.println("의사의 치료로 인해 " + mafiaTarget + "님이 살아났습니다.");
+        } else {
+            System.out.println(mafiaTarget + "님이 죽었습니다.");
+            players.remove(mafiaTarget);
+            citizenTeam.remove(mafiaTarget);
+            deadPlayers.add(mafiaTarget);
+        }
     }
 
 
 
 
-    public void compareNumofMafiaAndCitizen(ArrayList<Player> citizenTeam, ArrayList<Player> mafiaTeam){
+    public void compareNumOfMafiaAndCitizen(ArrayList<String> mafiaTeam, ArrayList<String> citizenTeam ){
         if(citizenTeam.size() <= mafiaTeam.size()){
             System.out.println("마피아의 수가 시민수와 같거나 많습니다. 마피아 팀의 승리입니다!");
+            System.exit(0);
         } else if (mafiaTeam.size() == 0) {
             System.out.println("마피아가 모두 사망했습니다. 시민팀의 승리입니다!");
+            System.exit(0);
         }
     }
-
-    //public boolean checkRoleRedundancy(Mafia mafia, Doctor doctor, Police police){}
 }

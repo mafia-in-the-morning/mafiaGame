@@ -16,8 +16,17 @@ public class Doctor extends Player{
         if (!deadPlayers.contains(doctor.getName())) {
             do {
                 System.out.print("의사는 누구를 살리겠습니까? ");
+                System.out.print("\n현재 살아있는 인원: [ ");
+                for (String value : players) {
+                    System.out.print(value + " ");
+                }
+
+                System.out.println("] ");
                 doctorTarget = scanner.nextLine();
-                if (deadPlayers.contains(doctorTarget)) {
+                if (players.contains(doctorTarget) && !deadPlayers.contains(doctorTarget)) {
+                    break;
+                }
+                else if (deadPlayers.contains(doctorTarget)) {
                     System.out.println(doctorTarget + "님은 이미 죽은 상태입니다. 다시 선택해주세요.");
                 } else {
                     System.out.println("잘못된 입력입니다. 다시 입력해주세요.");

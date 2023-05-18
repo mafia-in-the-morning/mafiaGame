@@ -37,7 +37,10 @@ public class Main {
         Police police = null;
 
         int round = 1;
+
+        System.out.println(" ");
         System.out.println("☀️" + round + "번째 낮은 직업을 배정합니다.");
+        System.out.println("======================================");
 
         //생성된 마피아, 경찰, 의사 객체에 역할 할당
         game.assignRoles(players, mafiaTeam, citizenTeam);
@@ -52,6 +55,8 @@ public class Main {
 
         while (true) {
             // 밤이 되었습니다.
+
+            System.out.println("======================================");
             System.out.println("🌙" + round + "번째 밤이 되었습니다.");
 
             // 마피아가 죽일 대상을 선택합니다.
@@ -71,8 +76,10 @@ public class Main {
 
             //시민팀과 마피아팀 수 비교
             game.compareNumOfMafiaAndCitizen(mafiaTeam, citizenTeam);
-
+            round++;
             // 낮이 되었을 때
+
+            System.out.println("======================================");
             System.out.println("☀️" + round + "번째 낮이 되었습니다.");
             System.out.println("3분간 회의를 진행합니다.");
             Meeting meeting = new Meeting(players);
@@ -125,7 +132,6 @@ public class Main {
             }else { // 무효 표시가 된 경우 결과 출력
                 System.out.println("\n투표가 무효 처리되었습니다. 동점이거나 모든 참가자가 투표를 거부했습니다.");
             }
-            round++;
         }
     }
 }

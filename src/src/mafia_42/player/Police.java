@@ -15,7 +15,7 @@ public class Police extends Player {
         //경찰이 살아있어야 실행됨
         if (!deadPlayers.contains(police.getName())) {
             do {
-                System.out.print("경찰은 누구를 조사하겠습니까? ");
+                System.out.print("🚨경찰은 누구를 조사하겠습니까? ");
                 System.out.print("\n현재 살아있는 인원: [ ");
                 for (String player : players) {
                     System.out.print(player + " ");
@@ -27,18 +27,20 @@ public class Police extends Player {
                     break;
                 }
                 else if (policeTarget.equals(police.getName())) {
-                    System.out.println("경찰은 자신을 조사할 수 없습니다. 다시 선택해주세요.");
+                    System.out.println(">> 경찰은 자신을 조사할 수 없습니다. 다시 선택해주세요.");
+                    System.out.println(" ");
                     //return "경찰은 자신을 조사할 수 없습니다. 다시 선택해주세요.";
                 } else if (deadPlayers.contains(policeTarget)) {
-                    System.out.println(policeTarget + "님은 이미 죽은 상태입니다. 다시 선택해주세요.");
-                    //return policeTarget + "님은 이미 죽은 상태입니다. 다시 선택해주세요.";
+                    System.out.println(">> " + policeTarget + "님은 이미 죽은 상태입니다. 다시 선택해주세요.");
+                    System.out.println(" ");
                 } else {
-                    System.out.println("잘못된 입력입니다. 다시 입력해주세요.");
-                    //return "잘못된 입력입니다. 다시 입력해주세요.";
+                    System.out.println(">> 잘못된 입력입니다. 다시 입력해주세요.");
+                    System.out.println(" ");
                 }
             } while (!players.contains(policeTarget) || policeTarget.equals(police.getName()) || deadPlayers.contains(policeTarget));
         } else{
-                System.out.println("경찰이 사망했으므로 경찰은 역할을 수행할 수 없습니다.");
+            System.out.println(">> ☠️경찰이 사망했으므로 경찰은 역할을 수행할 수 없습니다.");
+            System.out.println(" ");
         }
         return policeTarget;
     }

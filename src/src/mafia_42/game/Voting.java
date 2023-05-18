@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class Voting {
     public HashMap<String, Integer> conductVoting(List<String> players, List<String> deadPlayers) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("\n=== 투표 시간 ===");
+        System.out.println("=== 투표 시간 ===");
         System.out.println(players);
         HashMap<String, Integer> votes = new HashMap<>();
 
@@ -25,7 +25,8 @@ public class Voting {
                         }
                         voted = true;
                     } else {
-                        System.out.println("죽은 참가자에게는 투표할 수 없습니다. 다시 입력해주세요.");
+                        System.out.println(">> ❌죽은 참가자에게는 투표할 수 없습니다. 다시 입력해주세요.");
+                        System.out.println(" ");
                     }
                 }
             }

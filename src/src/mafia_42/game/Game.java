@@ -94,7 +94,7 @@ public class Game {
 
         // 마피아, 의사, 경찰 랜덤 선택
         mafia = new Mafia(players.get(mafiaNum));
-        System.out.println(">> 🔪마피아: " + mafia.getName() + "님");
+        System.out.println(">> 🔫마피아: " + mafia.getName() + "님");
 
 
         mafiaTeam.add(mafia.getName());
@@ -137,18 +137,18 @@ public class Game {
 
     public void showDetectResult(ArrayList<String> mafiaTeam, String policeTarget){
         if (mafiaTeam.contains(policeTarget)) {
-            System.out.println(policeTarget + "님은 마피아입니다.");
+            System.out.println(">> " + policeTarget + "님은 마피아입니다.");
         }
         else {
-            System.out.println(policeTarget + "님은 마피아가 아닙니다.");
+            System.out.println(">> " + policeTarget + "님은 마피아가 아닙니다.");
         }
     }
 
     public void showHealResult(String doctorTarget, String mafiaTarget, ArrayList<String> players, ArrayList<String> deadPlayers, ArrayList<String> citizenTeam){
         if (mafiaTarget.equals(doctorTarget)) {
-            System.out.println("의사의 치료로 인해 " + mafiaTarget + "님이 살아났습니다.");
+            System.out.println(">> 👼 의사의 치료로 인해 " + mafiaTarget + "님이 살아났습니다.");
         } else {
-            System.out.println(mafiaTarget + "님이 죽었습니다.");
+            System.out.println(">> 🩸 " +mafiaTarget + "님이 죽었습니다.");
             players.remove(mafiaTarget);
             citizenTeam.remove(mafiaTarget);
             deadPlayers.add(mafiaTarget);

@@ -1,5 +1,7 @@
 package mafia_42.player;
 
+import mafia_42.game.AsciiArtPrinter;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -13,26 +15,30 @@ public class Mafia extends Player{
 
     public String selectTarget(ArrayList<String> players, ArrayList<String> deadPlayers, ArrayList<String> mafiaTeam) {
         String mafiaTarget;
+        AsciiArtPrinter.mafiaLogo();
         do {
-            System.out.print("\n현재 살아있는 인원: [ ");
+            System.out.print("현재 살아있는 인원: [ ");
             for (String value : players) {
                 System.out.print(value + " ");
             }
 
             System.out.println("] ");
-            System.out.print("마피아는 누구를 죽이겠습니까? ");
+            System.out.print("🔫 마피아는 누구를 죽이겠습니까? ");
             mafiaTarget = scanner.nextLine();
 
             if (players.contains(mafiaTarget) && !deadPlayers.contains(mafiaTarget)) {
                 if(mafiaTeam.contains(mafiaTarget)){
-                    System.out.println("마피아는 마피아를 죽일 수 없습니다. 다시 선택해주세요.");
+                    System.out.println(">> 마피아는 마피아를 죽일 수 없습니다. 다시 선택해주세요.");
+                    System.out.println(" ");
                 }else{
                     break;}
 
             } else if (deadPlayers.contains(mafiaTarget)) {
-                System.out.println("이미 죽은 플레이어입니다. 다시 선택해주세요.");
+                System.out.println(">> 이미 죽은 플레이어입니다. 다시 선택해주세요.");
+                System.out.println(" ");
             } else {
-                System.out.println("잘못된 입력입니다. 다시 입력해주세요.");
+                System.out.println(">> 잘못된 입력입니다. 다시 입력해주세요.");
+                System.out.println(" ");
             }
         } while (true);
         return mafiaTarget;

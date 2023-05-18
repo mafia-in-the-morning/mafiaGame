@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class Meeting {
     //회의
     Scanner scanner = new Scanner(System.in);
-    public Meeting(ArrayList<Player> players) {
+    public Meeting(ArrayList<String> players) {
     }
 
     //투표
@@ -34,7 +34,5 @@ public class Meeting {
                 }
             }
         }
-
     }
-
 }

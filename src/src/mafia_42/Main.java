@@ -60,7 +60,7 @@ if(numOfPlayers<6) {
 }
 if(numOfPlayers>=6){
     System.out.println("게임 참가자: " + players);
-    System.out.println("마피아: " + mafia);
+    System.out.println("마피아1: " + mafia);
     System.out.println("마피아2: "+mafia2);
     System.out.println("의사: " + doctor);
     System.out.println("경찰: " + police);
@@ -92,7 +92,6 @@ if(numOfPlayers>=6){
                 }
 
             }
-
             // 의사가 살릴 대상을 선택합니다.
             String doctorTarget = "";
             if (!deadPlayers.contains(doctor)) {

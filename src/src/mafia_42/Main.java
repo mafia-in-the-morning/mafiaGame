@@ -226,7 +226,6 @@ if(numOfPlayers>=6){
                 System.out.println("\n투표가 무효 처리되었습니다. 동점이거나 모든 참가자가 투표를 거부했습니다.");
             }
 
-
             Round++;
 
         }
